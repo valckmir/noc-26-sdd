@@ -197,7 +197,15 @@ def manage_reservation() -> None:
             st.info("This reservation is cancelled.")
         return
 
-    if st.button("Cancel reservation", type="secondary"):
+    if not st.session_state.get("confirm_cancellation"):
+        if st.button("Cancel reservation", type="secondary"):
+            st.session_state["confirm_cancellation"] = True
+            st.rerun()
+        return
+
+    st.warning("Are you sure you want to cancel this reservation?")
+    confirm_col, keep_col = st.columns(2)
+    if confirm_col.button("Confirm cancellation", type="primary"):
         try:
             with Session(engine) as session:
                 cancelled = cancel_reservation(
@@ -206,10 +214,15 @@ def manage_reservation() -> None:
                     hotel_timezone=settings.hotel_timezone,
                 )
             st.session_state["just_cancelled"] = True
+            st.session_state["confirm_cancellation"] = False
             st.session_state["managed_reservation_code"] = cancelled.code
             st.rerun()
         except ReservationError as error:
+            st.session_state["confirm_cancellation"] = False
             st.error(str(error))
+    if keep_col.button("Keep reservation"):
+        st.session_state["confirm_cancellation"] = False
+        st.rerun()
 
 
 if __name__ == "__main__":

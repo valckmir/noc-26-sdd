@@ -51,6 +51,18 @@ def test_customer_can_lookup_and_cancel_reservation_by_code(tmp_path, monkeypatc
     assert len(at.button) == 2
     at.button[1].click().run()
     assert not at.exception
+    with Session(engine) as session:
+        reservation = session.exec(select(Reservation)).one()
+    assert reservation.status == ReservationStatus.ACTIVE
+    assert any("sure you want to cancel" in item.value.lower() for item in at.warning)
+    assert len(at.button) == 3
+    assert [button.label for button in at.button] == [
+        "Find reservation",
+        "Confirm cancellation",
+        "Keep reservation",
+    ]
+    at.button[1].click().run()
+    assert not at.exception
     assert any("cancelled" in item.value.lower() for item in at.success)
     with Session(engine) as session:
         reservation = session.exec(select(Reservation)).one()
