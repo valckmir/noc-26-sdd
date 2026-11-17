@@ -38,8 +38,9 @@ services, not Streamlit views or Typer command handlers. SQLite transactions
 MUST prevent overbooking. Capacity CSV import is all-or-nothing. Staff uses the
 CLI rather than customer web pages. `HOTEL_TIMEZONE` MUST be configured to the
 facility's local IANA time zone so cancellation deadlines use local calendar
-dates. Reservation codes contain six digits displayed as `NNN-NNN`; uniqueness
-MUST be enforced despite the finite code space. Configuration MUST be loaded
+dates. Reservation codes are randomly generated six-digit numbers displayed as
+`NNN-NNN`; uniqueness MUST be enforced despite the finite code space, retrying
+on collision. Configuration MUST be loaded
 through Pydantic Settings, with `.env` supported. Dependencies MUST be managed
 with uv.
 

@@ -24,7 +24,7 @@
 - [ ] T005 Implement Pydantic Settings loading `.env`, SQLite database path, and required IANA `HOTEL_TIMEZONE` in `src/cathotel/config.py`.
 - [ ] T006 Implement SQLModel SQLite engine, session creation, and table initialization helpers in `src/cathotel/database.py`.
 - [ ] T007 Define the `CapacityDate` SQLModel in `src/cathotel/models.py` with `date` as the unique primary/business key and `room_capacity` as a required non-negative integer.
-- [ ] T008 Define the `Reservation` SQLModel in `src/cathotel/models.py` with a unique six-digit code displayed as two three-digit groups, arrival/departure dates, non-empty trimmed cat name and breed, required social and daily-walk booleans, four optional service booleans defaulting false, active/cancelled status defaulting active, and creation timestamp.
+- [ ] T008 Define the `Reservation` SQLModel in `src/cathotel/models.py` with a unique randomly generated six-digit code displayed as two three-digit groups, arrival/departure dates, non-empty trimmed cat name and breed, required social and daily-walk booleans, four optional service booleans defaulting false, active/cancelled status defaulting active, and creation timestamp.
 - [ ] T009 Implement shared facility-local date and cancellation-cutoff helpers in `src/cathotel/services/dates.py`, using configured `HOTEL_TIMEZONE` and cutoff through the end of the local date two calendar days before check-in.
 
 **Checkpoint**: Shared settings, SQLite session, domain models, and date rules are available before story work.
@@ -61,11 +61,11 @@
 ### Tests for User Story 2
 
 - [ ] T015 [P] [US2] Add reservation-service tests for past/invalid date ranges, every-night availability, missing capacity, required cat fields, optional service combinations, and capacity exhaustion in `tests/unit/test_reservation_booking.py`.
-- [ ] T016 [P] [US2] Add Streamlit AppTest coverage for past-date exclusion, unavailable range messaging, successful immediate confirmation, and `NNN-NNN` code display in `tests/acceptance/test_customer_booking.py`.
+- [ ] T016 [P] [US2] Add Streamlit AppTest coverage for past-date exclusion, unavailable range messaging, successful immediate confirmation, and random unique six-digit `NNN-NNN` code format in `tests/acceptance/test_customer_booking.py`.
 
 ### Implementation for User Story 2
 
-- [ ] T017 [US2] Implement reservation-code generation and uniqueness retry in `src/cathotel/services/reservations.py`; generate exactly six numeric digits, preserve leading zeros, display as `NNN-NNN`, and enforce uniqueness in SQLite.
+- [ ] T017 [US2] Implement reservation-code generation and uniqueness retry in `src/cathotel/services/reservations.py`; generate a random six-digit number, preserve leading zeros, display as `NNN-NNN`, and enforce uniqueness in SQLite by retrying collisions.
 - [ ] T018 [US2] Implement service-level date/detail validation and availability checks in `src/cathotel/services/reservations.py`; reject past arrival dates, require departure after arrival, count occupied nights as arrival-inclusive/departure-exclusive, require capacity on every occupied night, and treat dates without capacity as unavailable.
 - [ ] T019 [US2] Implement transactional reservation confirmation in `src/cathotel/services/reservations.py`; recheck every occupied night's capacity and persist the active reservation atomically so concurrent confirmations cannot exceed capacity.
 - [ ] T020 [US2] Implement the Streamlit customer booking flow in `src/cathotel/web.py`; prevent selecting dates before facility-local today, omit room listing/type selection and staff controls, collect required cat fields and optional bath/massage/claw-trimming/premium-food choices, call services, and display availability, validation, conflict, or confirmation results.
@@ -87,7 +87,7 @@
 
 ### Implementation for User Story 3
 
-- [ ] T023 [US3] Implement reservation lookup by exact six-digit `NNN-NNN` code in `src/cathotel/services/reservations.py`; treat the code as the sole customer credential and do not limit failed attempts.
+- [ ] T023 [US3] Implement reservation lookup by exact randomly generated six-digit `NNN-NNN` code in `src/cathotel/services/reservations.py`; treat the code as the sole customer credential and do not limit failed attempts.
 - [ ] T024 [US3] Implement transactional cancellation in `src/cathotel/services/reservations.py`; allow cancellation through the end of facility-local check-in date minus two calendar days, refuse it afterward, and transition active to cancelled exactly once.
 - [ ] T025 [US3] Add reservation lookup and cancellation screens/flows to `src/cathotel/web.py`; show details and status for a recognized code, require cancellation confirmation, show unknown-code and deadline errors, and send no external notifications.
 

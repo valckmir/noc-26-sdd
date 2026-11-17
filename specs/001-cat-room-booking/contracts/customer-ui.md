@@ -19,8 +19,8 @@ management and does not require customer registration or login.
 
 ## Reservation lookup and cancellation
 
-- Accept the six-digit reservation code formatted `NNN-NNN` as the sole customer
-  credential. Show no reservation data for an unknown code.
+- Accept the randomly generated six-digit reservation code formatted `NNN-NNN`
+  as the sole customer credential. Show no reservation data for an unknown code.
 - Show current details and status for a recognized code.
 - Allow cancellation through the end of the facility-local calendar date two
   calendar days before check-in. After this date, refuse cancellation and explain

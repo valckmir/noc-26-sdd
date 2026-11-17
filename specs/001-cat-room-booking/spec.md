@@ -18,6 +18,7 @@
 - Q: May a customer cancel through the end of the calendar day that is two days before check-in? → A: Yes; cancellation is allowed through the end of the local calendar day two days before check-in.
 - Q: What format must reservation codes use? → A: Six digits split into two three-digit groups separated by a hyphen (###-###).
 - Q: Should the six-digit code be split into two groups of three digits (###-###)? → A: Yes; use two groups of three digits (###-###).
+- Q: How should reservation codes be generated? → A: Generate a random six-digit number, displayed in two three-digit groups separated by a hyphen, and ensure it is unique.
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -136,11 +137,11 @@ available for a new booking.
   affected date.
 - Booking confirmation rechecks capacity so concurrent attempts cannot
   overbook a date.
-- A reservation code must be unique and consist of six digits displayed as two
-  three-digit groups separated by a hyphen (###-###). Cancelled reservations
-  remain identifiable as cancelled and do not consume capacity. The code alone
-  authorizes retrieval and cancellation; repeated failed code attempts are not
-  limited.
+- A reservation code must be a randomly generated six-digit number, unique and
+  displayed as two three-digit groups separated by a hyphen (###-###). Cancelled
+  reservations remain identifiable as cancelled and do not consume capacity. The
+  code alone authorizes retrieval and cancellation; repeated failed code
+  attempts are not limited.
 - Cancellation is allowed through the end of the local calendar day that is two
   calendar days before check-in. On the following day, cancellation is no longer
   allowed.
@@ -172,8 +173,8 @@ available for a new booking.
 - **FR-007**: On successful confirmation, the system MUST make the reservation
   effective immediately and show its details and a unique reservation code in
   the format ###-### in the application, without requiring staff approval. Each
-  code MUST contain exactly six digits, divided into two three-digit groups by
-  one hyphen, and MUST be unique.
+  code MUST be generated randomly, contain exactly six digits divided into two
+  three-digit groups by one hyphen, and MUST be unique.
 - **FR-008**: The system MUST let a customer retrieve reservation details by
   providing its reservation code, without registration or login.
 - **FR-009**: The system MUST let a customer cancel an active reservation using
@@ -208,10 +209,10 @@ available for a new booking.
 
 - **Capacity date**: A calendar date and the total number of rooms available
   that night, supplied by staff.
-- **Reservation**: A confirmed stay identified by a unique six-digit code
-  displayed as two three-digit groups separated by a hyphen (###-###), arrival
-  and departure dates, cat details, selected optional services, and an active or
-  cancelled status.
+- **Reservation**: A confirmed stay identified by a unique randomly generated
+  six-digit code displayed as two three-digit groups separated by a hyphen
+  (###-###), arrival and departure dates, cat details, selected optional
+  services, and an active or cancelled status.
 - **Cat details**: The cat's name, breed, social status, and daily-walk
   requirement associated with a reservation.
 - **Optional service selection**: The set of wellness treatments and food

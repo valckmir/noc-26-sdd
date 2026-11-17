@@ -58,13 +58,14 @@ by host or conflict with calendar-day semantics.
 
 ## Decision: Use a six-digit code with the specified display grouping
 
-**Decision**: Generate a six-digit numeric code, display and accept it as
-`NNN-NNN`, enforce uniqueness, and treat the code as the sole customer
-credential. Do not limit failed code attempts, as clarified by the user.
+**Decision**: Generate a random six-digit numeric code, display and accept it as
+`NNN-NNN`, enforce uniqueness with collision retries, and treat the code as the
+sole customer credential. Do not limit failed code attempts, as clarified by the
+user.
 
-**Rationale**: This implements the specified format and accountless retrieval
-and cancellation behavior. A database uniqueness constraint is required because
-the possible code space is finite.
+**Rationale**: This implements the specified random format and accountless
+retrieval and cancellation behavior. A database uniqueness constraint and
+collision retry are required because the possible code space is finite.
 
 **Alternatives considered**: Longer opaque tokens and additional customer
 credentials conflict with the explicit requirements.
