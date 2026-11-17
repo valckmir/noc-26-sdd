@@ -40,3 +40,11 @@ No notification is sent. All information is shown only in the application.
 - UI must not allow users to pick a past date
 - cancellation is possible until 2 calendar days before check-in
 - reservation code must be 6 digits split in 2 group separated with "-"
+
+
+## Plan
+
+Implement the app with the streamlit framework. Web interface is for customers, staff uses python typer commands for CSV upload.
+Data is stored in SQLite DB, SQLModel is used as ORM and for business models. Pydantic settings with .env file is used for configuration.
+
+The uv is used for dependency management.
