@@ -13,6 +13,7 @@ from cathotel.services.reservations import (
     create_reservation,
     get_reservation,
     cancel_reservation,
+    validate_stay_dates,
 )
 
 
@@ -55,10 +56,13 @@ def main() -> None:
     check = st.button("Check availability")
 
     if check:
-        if departure_date <= arrival_date:
-            st.error("Departure date must be after arrival date.")
-            st.session_state["available_range"] = None
-        else:
+        try:
+            validate_stay_dates(
+                arrival_date,
+                departure_date,
+                hotel_timezone=settings.hotel_timezone,
+                today=today,
+            )
             with Session(engine) as session:
                 available = check_availability(session, arrival_date, departure_date)
             st.session_state["available_range"] = (
@@ -69,6 +73,9 @@ def main() -> None:
                 st.success("A room is available for these dates.")
             else:
                 st.error("No room is available for the entire selected date range.")
+        except ReservationError as error:
+            st.session_state["available_range"] = None
+            st.error(str(error))
 
     available_range = st.session_state.get("available_range")
     if not available_range or available_range != (arrival_date, departure_date):

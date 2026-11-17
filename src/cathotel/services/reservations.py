@@ -35,11 +35,40 @@ def _available_for_night(session: Session, night: date) -> bool:
     return reservations < capacity.room_capacity
 
 
+def validate_stay_dates(
+    arrival_date: date,
+    departure_date: date,
+    *,
+    hotel_timezone: str,
+    today: date | None = None,
+) -> None:
+    current_date = today or facility_today(hotel_timezone)
+    if arrival_date < current_date:
+        raise ReservationError("arrival date cannot be in the past")
+    if departure_date <= arrival_date:
+        raise ReservationError("departure date must be after arrival date")
+
+
 def check_availability(
-    session: Session, arrival_date: date, departure_date: date
+    session: Session,
+    arrival_date: date,
+    departure_date: date,
+    *,
+    hotel_timezone: str | None = None,
+    today: date | None = None,
 ) -> bool:
     if departure_date <= arrival_date:
         return False
+    if hotel_timezone is not None:
+        try:
+            validate_stay_dates(
+                arrival_date,
+                departure_date,
+                hotel_timezone=hotel_timezone,
+                today=today,
+            )
+        except ReservationError:
+            return False
     return all(
         _available_for_night(session, night)
         for night in _occupied_nights(arrival_date, departure_date)
@@ -67,11 +96,12 @@ def create_reservation(
     wellness_claw_trimming: bool = False,
     premium_cat_food: bool = False,
 ) -> Reservation:
-    current_date = today or facility_today(hotel_timezone)
-    if arrival_date < current_date:
-        raise ReservationError("arrival date cannot be in the past")
-    if departure_date <= arrival_date:
-        raise ReservationError("departure date must be after arrival date")
+    validate_stay_dates(
+        arrival_date,
+        departure_date,
+        hotel_timezone=hotel_timezone,
+        today=today,
+    )
 
     clean_name = cat_name.strip()
     clean_breed = breed.strip()

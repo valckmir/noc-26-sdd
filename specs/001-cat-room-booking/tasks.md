@@ -160,5 +160,5 @@
 
 ## Phase 8: Convergence
 
-- [ ] T031 Remove date-range business-rule decisions from `src/cathotel/web.py` and delegate invalid-range validation to `src/cathotel/services/reservations.py`, keeping only user-facing error display in the view, per Constitution II (contradicts, CRITICAL).
+- [X] T031 Remove date-range business-rule decisions from `src/cathotel/web.py` and delegate invalid-range validation to `src/cathotel/services/reservations.py`, keeping only user-facing error display in the view, per Constitution II (contradicts, CRITICAL).
 - [ ] T032 Add an explicit cancellation confirmation step to the reservation-management flow in `src/cathotel/web.py`; call the cancellation service only after the customer confirms, and update `tests/acceptance/test_customer_reservation_management.py` to verify cancellation is not applied before confirmation, per FR-009, US3/AC2, and T025 (partial, HIGH).

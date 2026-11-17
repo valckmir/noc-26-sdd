@@ -9,6 +9,7 @@ from cathotel.services.reservations import (
     ReservationError,
     check_availability,
     create_reservation,
+    validate_stay_dates,
 )
 
 
@@ -102,3 +103,19 @@ def test_booking_counts_overlapping_reservations_and_rejects_full_night(session)
 
     with pytest.raises(ReservationError, match="available"):
         create_reservation(session, **details(arrival_date=date(2030, 1, 1)))
+
+
+def test_stay_date_validation_is_a_service_rule():
+    validate_stay_dates(
+        date(2030, 1, 1),
+        date(2030, 1, 2),
+        hotel_timezone="UTC",
+        today=date(2030, 1, 1),
+    )
+    with pytest.raises(ReservationError, match="departure date"):
+        validate_stay_dates(
+            date(2030, 1, 2),
+            date(2030, 1, 2),
+            hotel_timezone="UTC",
+            today=date(2030, 1, 1),
+        )
