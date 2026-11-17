@@ -152,3 +152,8 @@
 - `[P]` is used only for tests in distinct files that can be authored independently.
 - Tests are included as part of the approved validation approach; pytest is a uv development dependency.
 - All business rules belong in services; Streamlit views and Typer commands remain thin adapters.
+
+## Phase 7: Convergence
+
+- [ ] T029 Fix capacity validation in `src/cathotel/services/capacity.py` to count every active reservation occupying each imported date (arrival-inclusive, departure-exclusive), not only reservations arriving on that date; add an overlapping-stay capacity-reduction regression test in `tests/unit/test_capacity_service.py` per FR-013 and US1/AC3 (contradicts, CRITICAL).
+- [ ] T030 Require capacity CSV dates to match exact `YYYY-MM-DD` format before parsing in `src/cathotel/services/capacity.py`; add a test that rejects compact dates such as `20300101` in `tests/unit/test_capacity_service.py` per plan: CSV date format (partial, MEDIUM).
