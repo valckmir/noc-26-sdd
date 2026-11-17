@@ -10,14 +10,44 @@
 
 ## User Scenarios & Testing *(mandatory)*
 
-### User Story 1 - Book a Cat's Stay (Priority: P1)
+### User Story 1 - Provide Room Capacity (Priority: P1)
+
+As a staff member, I want to upload a CSV of dated room capacities, so that
+customers can book only against the capacity available for each night.
+
+**Why this priority**: Staff-defined capacity is the foundation for reliable
+availability checks and must be established before customers can book.
+
+**Independent Test**: Upload a valid CSV, verify the listed dates' capacity is
+used in availability checks, then upload invalid data and verify it is rejected
+without applying a partial update.
+
+**Acceptance Scenarios**:
+
+1. **Given** a valid CSV with a date and non-negative room capacity on each row,
+   **When** staff upload it, **Then** the capacity for each listed date is
+   updated and the result is shown in the application.
+2. **Given** a CSV with missing columns, invalid dates, negative or non-numeric
+   capacity, or duplicate dates, **When** staff upload it, **Then** the upload is
+   rejected with a useful error and no rows from that upload are applied.
+3. **Given** staff update capacity for dates that have active reservations,
+   **When** an update would make any date's capacity lower than its active
+   reservations, **Then** that update is rejected and existing capacity remains
+   unchanged.
+4. **Given** a customer checks dates for which no capacity has been provided,
+   **When** availability is evaluated, **Then** those dates are treated as
+   unavailable.
+
+---
+
+### User Story 2 - Book a Cat's Stay (Priority: P2)
 
 As a cat owner, I want to check availability for a date range and submit the
 stay and service details, so that I can immediately secure an available room
 without creating an account or waiting for staff approval.
 
-**Why this priority**: Booking is the primary customer value and creates the
-reservation that all other journeys depend on.
+**Why this priority**: Booking is the primary customer value, enabled by staff
+first defining room capacity.
 
 **Independent Test**: Provide available capacity for a date range, complete the
 booking flow, and verify that the customer receives a reservation code and
@@ -42,13 +72,14 @@ immediate confirmation with the submitted details.
 
 ---
 
-### User Story 2 - Retrieve or Cancel a Reservation (Priority: P2)
+### User Story 3 - Retrieve or Cancel a Reservation (Priority: P3)
 
 As a cat owner with a reservation code, I want to view my reservation or cancel
 it, so that I can manage the stay without an account or contacting staff.
 
 **Why this priority**: Customers need a self-service way to verify their booking
-and release capacity if their plans change.
+and release capacity if their plans change, after the capacity and booking
+workflows are available.
 
 **Independent Test**: Use a valid reservation code to retrieve the reservation,
 then cancel it and verify that it is no longer active and its capacity is
@@ -71,37 +102,6 @@ available for a new booking.
 5. **Given** a reservation is already cancelled, **When** its code is used to
    view or cancel it again, **Then** its cancelled status is shown and no
    additional capacity is released.
-
----
-
-### User Story 3 - Provide Room Capacity (Priority: P3)
-
-As a staff member, I want to upload a CSV of dated room capacities, so that
-customers can book only against the capacity available for each night.
-
-**Why this priority**: Accurate capacity is required for reliable bookings, but
-can be supplied independently of the customer booking and reservation-code
-journeys.
-
-**Independent Test**: Upload a valid CSV, verify the listed dates' capacity is
-used in availability checks, then upload invalid data and verify it is rejected
-without applying a partial update.
-
-**Acceptance Scenarios**:
-
-1. **Given** a valid CSV with a date and non-negative room capacity on each row,
-   **When** staff upload it, **Then** the capacity for each listed date is
-   updated and the result is shown in the application.
-2. **Given** a CSV with missing columns, invalid dates, negative or non-numeric
-   capacity, or duplicate dates, **When** staff upload it, **Then** the upload is
-   rejected with a useful error and no rows from that upload are applied.
-3. **Given** staff update capacity for dates that have active reservations,
-   **When** an update would make any date's capacity lower than its active
-   reservations, **Then** that update is rejected and existing capacity remains
-   unchanged.
-4. **Given** a customer checks dates for which no capacity has been provided,
-   **When** availability is evaluated, **Then** those dates are treated as
-   unavailable.
 
 ---
 

@@ -31,8 +31,8 @@
 
 ## Notes
 
-- Reviewed all checklist items against the specification. Customer booking,
-  reservation-code management, staff capacity uploads, validation behavior, and
-  scope boundaries are covered. Staff upload access needs an accountless
+- Reviewed all checklist items against the specification. Staff capacity definition is prioritized first, followed by customer booking
+  and reservation-code management. Validation behavior and scope boundaries are
+  covered. Staff upload access needs an accountless
   protection decision; see the clarification in Assumptions. Resolve it before
   planning.
