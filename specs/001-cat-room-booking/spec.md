@@ -13,6 +13,7 @@
 ### Session 2026-11-17
 
 - Q: What accountless access should protect staff capacity uploads from customers and other unauthorized visitors? → A: The web application is for customers only; staff uses a different type of access to the system.
+- Q: Should the system limit repeated failed attempts to use reservation codes? → A: No; a unique reservation code alone is sufficient, with no limit on failed attempts.
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -126,7 +127,8 @@ available for a new booking.
 - Booking confirmation rechecks capacity so concurrent attempts cannot
   overbook a date.
 - A reservation code must be unique; cancelled reservations remain identifiable
-  as cancelled and do not consume capacity.
+  as cancelled and do not consume capacity. The code alone authorizes retrieval
+  and cancellation; repeated failed code attempts are not limited.
 - Optional services may be selected independently, including any combination
   of wellness treatments and premium cat food.
 - Empty or whitespace-only cat name or breed values are invalid.
@@ -161,6 +163,9 @@ available for a new booking.
 - **FR-010**: The system MUST NOT allow reservation details to be modified after
   confirmation. Customers who need different details must cancel and make a new
   reservation, subject to availability.
+- **FR-016**: A unique reservation code MUST be sufficient to retrieve or cancel
+  its reservation. The system MUST NOT require additional customer credentials
+  or limit repeated failed reservation-code attempts.
 - **FR-011**: Through the separate staff access path, the system MUST validate
   uploaded capacity data as a CSV with date and room capacity columns, reject
   invalid or duplicate-date data as a whole, and explain upload errors.
@@ -217,9 +222,9 @@ available for a new booking.
   capacity. Duplicate dates make the entire upload invalid.
 - Each active reservation consumes one room for each occupied night, regardless
   of cat count; one reservation describes one cat.
-- The reservation code is a private, sufficiently hard-to-guess credential. A
-  person possessing it can view or cancel that reservation; the application
-  does not provide customer accounts.
+- The unique reservation code is the sole customer credential for viewing or
+  cancelling a reservation. The application does not provide customer accounts
+  or limit repeated failed reservation-code attempts.
 - The customer-facing web application is for customers; staff manages capacity
   through a different access path to the system. The details of that staff access
   path are outside this feature specification.
