@@ -21,11 +21,11 @@
 
 **Purpose**: Provide shared configuration, database initialization, and core domain models required by every story.
 
-- [ ] T005 Implement Pydantic Settings loading `.env`, SQLite database path, and required IANA `HOTEL_TIMEZONE` in `src/cathotel/config.py`.
-- [ ] T006 Implement SQLModel SQLite engine, session creation, and table initialization helpers in `src/cathotel/database.py`.
-- [ ] T007 Define the `CapacityDate` SQLModel in `src/cathotel/models.py` with `date` as the unique primary/business key and `room_capacity` as a required non-negative integer.
-- [ ] T008 Define the `Reservation` SQLModel in `src/cathotel/models.py` with a unique randomly generated six-digit code displayed as two three-digit groups, arrival/departure dates, non-empty trimmed cat name and breed, required social and daily-walk booleans, four optional service booleans defaulting false, active/cancelled status defaulting active, and creation timestamp.
-- [ ] T009 Implement shared facility-local date and cancellation-cutoff helpers in `src/cathotel/services/dates.py`, using the configured facility IANA timezone `HOTEL_TIMEZONE` for booking-date validation and a cutoff through the end of the local calendar date two calendar days before check-in.
+- [X] T005 Implement Pydantic Settings loading `.env`, SQLite database path, and required IANA `HOTEL_TIMEZONE` in `src/cathotel/config.py`.
+- [X] T006 Implement SQLModel SQLite engine, session creation, and table initialization helpers in `src/cathotel/database.py`.
+- [X] T007 Define the `CapacityDate` SQLModel in `src/cathotel/models.py` with `date` as the unique primary/business key and `room_capacity` as a required non-negative integer.
+- [X] T008 Define the `Reservation` SQLModel in `src/cathotel/models.py` with a unique randomly generated six-digit code displayed as two three-digit groups, arrival/departure dates, non-empty trimmed cat name and breed, required social and daily-walk booleans, four optional service booleans defaulting false, active/cancelled status defaulting active, and creation timestamp.
+- [X] T009 Implement shared facility-local date and cancellation-cutoff helpers in `src/cathotel/services/dates.py`, using the configured facility IANA timezone `HOTEL_TIMEZONE` for booking-date validation and a cutoff through the end of the local calendar date two calendar days before check-in.
 
 **Checkpoint**: Shared settings, SQLite session, domain models, and date rules are available before story work.
 
