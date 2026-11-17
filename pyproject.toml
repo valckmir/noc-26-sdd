@@ -7,11 +7,21 @@ authors = [
     { name = "Miroslav Valcicak", email = "miroslav.valcicak@exxeta.com" }
 ]
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "pydantic-settings>=2.16.3",
+    "sqlmodel>=0.0.50",
+    "streamlit>=1.67.0",
+    "typer>=0.29.1",
+]
 
 [project.scripts]
-cathotel = "cathotel:main"
+cathotel = "cathotel.cli:app"
 
 [build-system]
 requires = ["uv_build>=0.13.7,<0.14.0"]
 build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+]
