@@ -33,3 +33,10 @@ Entire process is accountless - no registrations and logins are supported.
 After confirming and sending reservation request, the app generates unique reservation code. This code is then used for reservation management, i.e. showing details of reservation or cancelling it. Modifications are not allowed. Reservations are effective immediately - no humen confirmation is required.
 
 No notification is sent. All information is shown only in the application.
+
+
+## Clarify
+
+- UI must not allow users to pick a past date
+- cancellation is possible until 2 calendar days before check-in
+- reservation code must be 6 digits split in 2 group separated with "-"
