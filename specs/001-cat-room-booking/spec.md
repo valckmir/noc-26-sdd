@@ -16,6 +16,8 @@
 - Q: Should the system limit repeated failed attempts to use reservation codes? → A: No; a unique reservation code alone is sufficient, with no limit on failed attempts.
 - Q: Should the booking interface permit selecting past dates? → A: No; the UI must not allow selection of past dates.
 - Q: May a customer cancel through the end of the calendar day that is two days before check-in? → A: Yes; cancellation is allowed through the end of the local calendar day two days before check-in.
+- Q: What format must reservation codes use? → A: Six digits split into two three-digit groups separated by a hyphen (###-###).
+- Q: Should the six-digit code be split into two groups of three digits (###-###)? → A: Yes; use two groups of three digits (###-###).
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -68,8 +70,8 @@ immediate confirmation with the submitted details.
 1. **Given** capacity is available for every night in a valid date range,
    **When** a customer selects the range, enters the cat's required details,
    selects any optional services, and confirms the booking, **Then** the
-   reservation is immediately confirmed and a unique reservation code and
-   reservation details are shown.
+   reservation is immediately confirmed and a unique reservation code in the
+   format ###-### and reservation details are shown.
 2. **Given** the customer is checking a range that has no room available on at
    least one night, **When** availability is checked, **Then** the customer is
    told the range cannot be booked and is not prompted to submit a reservation.
@@ -134,9 +136,11 @@ available for a new booking.
   affected date.
 - Booking confirmation rechecks capacity so concurrent attempts cannot
   overbook a date.
-- A reservation code must be unique; cancelled reservations remain identifiable
-  as cancelled and do not consume capacity. The code alone authorizes retrieval
-  and cancellation; repeated failed code attempts are not limited.
+- A reservation code must be unique and consist of six digits displayed as two
+  three-digit groups separated by a hyphen (###-###). Cancelled reservations
+  remain identifiable as cancelled and do not consume capacity. The code alone
+  authorizes retrieval and cancellation; repeated failed code attempts are not
+  limited.
 - Cancellation is allowed through the end of the local calendar day that is two
   calendar days before check-in. On the following day, cancellation is no longer
   allowed.
@@ -167,7 +171,9 @@ available for a new booking.
   occupied date.
 - **FR-007**: On successful confirmation, the system MUST make the reservation
   effective immediately and show its details and a unique reservation code in
-  the application, without requiring staff approval.
+  the format ###-### in the application, without requiring staff approval. Each
+  code MUST contain exactly six digits, divided into two three-digit groups by
+  one hyphen, and MUST be unique.
 - **FR-008**: The system MUST let a customer retrieve reservation details by
   providing its reservation code, without registration or login.
 - **FR-009**: The system MUST let a customer cancel an active reservation using
@@ -202,9 +208,10 @@ available for a new booking.
 
 - **Capacity date**: A calendar date and the total number of rooms available
   that night, supplied by staff.
-- **Reservation**: A confirmed stay identified by a unique reservation code,
-  arrival and departure dates, cat details, selected optional services, and an
-  active or cancelled status.
+- **Reservation**: A confirmed stay identified by a unique six-digit code
+  displayed as two three-digit groups separated by a hyphen (###-###), arrival
+  and departure dates, cat details, selected optional services, and an active or
+  cancelled status.
 - **Cat details**: The cat's name, breed, social status, and daily-walk
   requirement associated with a reservation.
 - **Optional service selection**: The set of wellness treatments and food
