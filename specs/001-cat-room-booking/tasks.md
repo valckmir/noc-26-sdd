@@ -99,9 +99,9 @@
 
 **Purpose**: Validate the integrated implementation and keep setup documentation accurate.
 
-- [ ] T026 [P] Update package metadata and run instructions in `README.md` for uv setup, required `.env` settings, Streamlit startup, and Typer capacity import.
-- [ ] T027 Run and resolve the focused unit, integration, and acceptance suite with `uv run pytest`.
-- [ ] T028 Validate customer and staff workflows against `specs/001-cat-room-booking/quickstart.md`; resolve failures and update the guide if actual command behavior differs.
+- [X] T026 [P] Update package metadata and run instructions in `README.md` for uv setup, required `.env` settings, Streamlit startup, and Typer capacity import.
+- [X] T027 Run and resolve the focused unit, integration, and acceptance suite with `uv run pytest`.
+- [X] T028 Validate customer and staff workflows against `specs/001-cat-room-booking/quickstart.md`; resolve failures and update the guide if actual command behavior differs.
 
 ---
 
