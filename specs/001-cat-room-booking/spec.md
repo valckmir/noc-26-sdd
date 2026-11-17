@@ -15,6 +15,7 @@
 - Q: What accountless access should protect staff capacity uploads from customers and other unauthorized visitors? → A: The web application is for customers only; staff uses a different type of access to the system.
 - Q: Should the system limit repeated failed attempts to use reservation codes? → A: No; a unique reservation code alone is sufficient, with no limit on failed attempts.
 - Q: Should the booking interface permit selecting past dates? → A: No; the UI must not allow selection of past dates.
+- Q: May a customer cancel through the end of the calendar day that is two days before check-in? → A: Yes; cancellation is allowed through the end of the local calendar day two days before check-in.
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -101,16 +102,20 @@ available for a new booking.
 1. **Given** an active reservation, **When** the customer submits its valid
    reservation code, **Then** the reservation details and current status are
    shown.
-2. **Given** an active reservation, **When** the customer confirms cancellation
-   using its valid code, **Then** the reservation is cancelled and the
-   cancellation is shown in the application.
-3. **Given** a reservation has been cancelled, **When** a customer checks
+2. **Given** an active reservation and the current local calendar date is no
+   later than two calendar days before check-in, **When** the customer confirms
+   cancellation using its valid code, **Then** the reservation is cancelled and
+   the cancellation is shown in the application.
+3. **Given** an active reservation and the current local calendar date is later
+   than two calendar days before check-in, **When** the customer attempts to
+   cancel it, **Then** cancellation is refused and the reservation remains active.
+4. **Given** a reservation has been cancelled, **When** a customer checks
    availability for its dates, **Then** the cancelled reservation no longer
    consumes room capacity.
-4. **Given** an invalid or unknown reservation code, **When** submitted,
+5. **Given** an invalid or unknown reservation code, **When** submitted,
    **Then** no reservation details are disclosed and the customer receives a
    clear message that the code could not be used.
-5. **Given** a reservation is already cancelled, **When** its code is used to
+6. **Given** a reservation is already cancelled, **When** its code is used to
    view or cancel it again, **Then** its cancelled status is shown and no
    additional capacity is released.
 
@@ -132,6 +137,9 @@ available for a new booking.
 - A reservation code must be unique; cancelled reservations remain identifiable
   as cancelled and do not consume capacity. The code alone authorizes retrieval
   and cancellation; repeated failed code attempts are not limited.
+- Cancellation is allowed through the end of the local calendar day that is two
+  calendar days before check-in. On the following day, cancellation is no longer
+  allowed.
 - Optional services may be selected independently, including any combination
   of wellness treatments and premium cat food.
 - Empty or whitespace-only cat name or breed values are invalid.
@@ -163,10 +171,13 @@ available for a new booking.
 - **FR-008**: The system MUST let a customer retrieve reservation details by
   providing its reservation code, without registration or login.
 - **FR-009**: The system MUST let a customer cancel an active reservation using
-  its reservation code and show the cancellation result in the application.
+  its reservation code through the end of the local calendar day two calendar
+  days before check-in, and show the cancellation result in the application.
+  After that deadline, the system MUST refuse cancellation and keep the
+  reservation active.
 - **FR-010**: The system MUST NOT allow reservation details to be modified after
-  confirmation. Customers who need different details must cancel and make a new
-  reservation, subject to availability.
+  confirmation. Customers who need different details may cancel and make a new
+  reservation only before the cancellation deadline, subject to availability.
 - **FR-016**: A unique reservation code MUST be sufficient to retrieve or cancel
   its reservation. The system MUST NOT require additional customer credentials
   or limit repeated failed reservation-code attempts.
