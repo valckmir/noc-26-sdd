@@ -8,12 +8,19 @@
 
 **Input**: User description: "Develop a web application for cat owner to let them book rooms for cats. Customers must be able to pick a date range. There is only one type of rooms, therefore there is no need for room listing and room type selection. If there is any room available, customers are prompted to add cat name, breed, social or not, and daily walks required. Customers can select optional wellness (bath, massage, claws trimming) and premium cat food. Room availability/capacity is provided by staff by uploading CSV with date and room capacity. Entire process is accountless - no registrations and logins are supported. After confirming and sending reservation request, the app generates unique reservation code. This code is used to show reservation details or cancel it. Modifications are not allowed. Reservations are effective immediately - no human confirmation is required. No notification is sent; all information is shown only in the application."
 
+## Clarifications
+
+### Session 2026-11-17
+
+- Q: What accountless access should protect staff capacity uploads from customers and other unauthorized visitors? → A: The web application is for customers only; staff uses a different type of access to the system.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Provide Room Capacity (Priority: P1)
 
-As a staff member, I want to upload a CSV of dated room capacities, so that
-customers can book only against the capacity available for each night.
+As a staff member using the separate staff access path, I want to upload a CSV
+of dated room capacities, so that customers can book only against the capacity
+available for each night.
 
 **Why this priority**: Staff-defined capacity is the foundation for reliable
 availability checks and must be established before customers can book.
@@ -154,11 +161,13 @@ available for a new booking.
 - **FR-010**: The system MUST NOT allow reservation details to be modified after
   confirmation. Customers who need different details must cancel and make a new
   reservation, subject to availability.
-- **FR-011**: The system MUST validate uploaded capacity data as a CSV with date
-  and room capacity columns, reject invalid or duplicate-date data as a whole,
-  and explain upload errors in the application.
+- **FR-011**: Through the separate staff access path, the system MUST validate
+  uploaded capacity data as a CSV with date and room capacity columns, reject
+  invalid or duplicate-date data as a whole, and explain upload errors.
 - **FR-012**: Staff MUST be able to update capacity for dates included in a valid
-  upload; dates not included in that upload MUST retain their existing capacity.
+  upload through the staff access path; dates not included in that upload MUST
+  retain their existing capacity. The customer-facing web application MUST NOT
+  expose staff capacity-upload functionality.
 - **FR-013**: The system MUST reject a capacity update that would put any
   affected date below its active reservation count, without partially applying
   that upload.
@@ -211,9 +220,8 @@ available for a new booking.
 - The reservation code is a private, sufficiently hard-to-guess credential. A
   person possessing it can view or cancel that reservation; the application
   does not provide customer accounts.
-- The staff capacity-upload workflow does not require registration or login.
-  The accountless method for restricting capacity uploads to staff is
-  [NEEDS CLARIFICATION: what accountless access control should protect staff
-  capacity uploads from customers and other unauthorized visitors?]
+- The customer-facing web application is for customers; staff manages capacity
+  through a different access path to the system. The details of that staff access
+  path are outside this feature specification.
 - No payment, pricing, reservation edits, waitlist, or external notifications
   are included because they were not requested.

@@ -13,7 +13,7 @@
 
 ## Requirement Completeness
 
-- [ ] No [NEEDS CLARIFICATION] markers remain
+- [x] No [NEEDS CLARIFICATION] markers remain
 - [x] Requirements are testable and unambiguous
 - [x] Success criteria are measurable
 - [x] Success criteria are technology-agnostic (no implementation details)
@@ -33,6 +33,6 @@
 
 - Reviewed all checklist items against the specification. Staff capacity definition is prioritized first, followed by customer booking
   and reservation-code management. Validation behavior and scope boundaries are
-  covered. Staff upload access needs an accountless
-  protection decision; see the clarification in Assumptions. Resolve it before
-  planning.
+  covered. The customer-facing application and staff access path are distinguished;
+  details of staff access are outside this feature scope. All checklist items
+  pass.
