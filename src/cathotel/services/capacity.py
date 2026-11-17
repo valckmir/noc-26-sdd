@@ -2,7 +2,6 @@ import csv
 from datetime import date
 from typing import TextIO
 
-from sqlalchemy import func
 from sqlmodel import Session, select
 
 from cathotel.models import CapacityDate, Reservation, ReservationStatus
@@ -24,8 +23,11 @@ def _parse_capacity_csv(file: TextIO) -> list[CapacityDate]:
     for line_number, row in enumerate(reader, start=2):
         if None in row or row.get("date") is None or row.get("room_capacity") is None:
             raise CapacityImportError(f"row {line_number}: expected exactly two columns")
+        date_text = row["date"].strip()
         try:
-            capacity_date = date.fromisoformat(row["date"].strip())
+            capacity_date = date.fromisoformat(date_text)
+            if capacity_date.isoformat() != date_text:
+                raise ValueError("date is not in canonical ISO format")
         except ValueError as error:
             raise CapacityImportError(
                 f"row {line_number}: date must use ISO YYYY-MM-DD format"
@@ -62,23 +64,27 @@ def import_capacity_csv(session: Session, file: TextIO) -> int:
                 select(CapacityDate).where(CapacityDate.date.in_(dates))
             ).all()
         }
-        reservation_counts = dict(
-            session.exec(
-                select(Reservation.arrival_date, func.count(Reservation.id))
-                .where(
-                    Reservation.status == ReservationStatus.ACTIVE,
-                    Reservation.arrival_date.in_(dates),
-                )
-                .group_by(Reservation.arrival_date)
-            ).all()
-        )
+        active_reservations = session.exec(
+            select(Reservation).where(
+                Reservation.status == ReservationStatus.ACTIVE,
+                Reservation.arrival_date <= max(dates),
+                Reservation.departure_date > min(dates),
+            )
+        ).all()
+        reservation_counts = {
+            capacity_date: sum(
+                reservation.arrival_date <= capacity_date < reservation.departure_date
+                for reservation in active_reservations
+            )
+            for capacity_date in dates
+        }
 
         for row in rows:
-            active_reservations = reservation_counts.get(row.date, 0)
-            if row.room_capacity < active_reservations:
+            reservation_count = reservation_counts.get(row.date, 0)
+            if row.room_capacity < reservation_count:
                 raise CapacityImportError(
                     f"date {row.date.isoformat()}: capacity {row.room_capacity} is "
-                    f"below its {active_reservations} active reservations"
+                    f"below its {reservation_count} active reservations"
                 )
 
         for row in rows:
