@@ -18,6 +18,7 @@
 - Q: May a customer cancel through the end of the calendar day that is two days before check-in? → A: Yes; cancellation is allowed through the end of the local calendar day two days before check-in.
 - Q: What format must reservation codes use? → A: Six digits split into two three-digit groups separated by a hyphen (###-###).
 - Q: Should the six-digit code be split into two groups of three digits (###-###)? → A: Yes; use two groups of three digits (###-###).
+- Q: Which timezone defines local calendar dates for booking and cancellation rules? → A: The facility's configured IANA timezone (`HOTEL_TIMEZONE`).
 - Q: How should reservation codes be generated? → A: Generate a random six-digit number, displayed in two three-digit groups separated by a hyphen, and ensure it is unique.
 
 ## User Scenarios & Testing *(mandatory)*
@@ -106,12 +107,12 @@ available for a new booking.
 1. **Given** an active reservation, **When** the customer submits its valid
    reservation code, **Then** the reservation details and current status are
    shown.
-2. **Given** an active reservation and the current local calendar date is no
-   later than two calendar days before check-in, **When** the customer confirms
+2. **Given** an active reservation and the current date in the facility's configured IANA timezone (`HOTEL_TIMEZONE`) is
+   no later than two calendar days before check-in, **When** the customer confirms
    cancellation using its valid code, **Then** the reservation is cancelled and
    the cancellation is shown in the application.
-3. **Given** an active reservation and the current local calendar date is later
-   than two calendar days before check-in, **When** the customer attempts to
+3. **Given** an active reservation and the current date in the facility's configured IANA timezone (`HOTEL_TIMEZONE`) is
+   later than two calendar days before check-in, **When** the customer attempts to
    cancel it, **Then** cancellation is refused and the reservation remains active.
 4. **Given** a reservation has been cancelled, **When** a customer checks
    availability for its dates, **Then** the cancelled reservation no longer
@@ -143,9 +144,10 @@ available for a new booking.
   reservations remain identifiable as cancelled and do not consume capacity. The
   code alone authorizes retrieval and cancellation; repeated failed code
   attempts are not limited.
-- Cancellation is allowed through the end of the local calendar day that is two
-  calendar days before check-in. On the following day, cancellation is no longer
-  allowed.
+- Booking date validation and cancellation deadlines use the facility's configured
+  IANA timezone (`HOTEL_TIMEZONE`). Cancellation is allowed through the end of
+  the calendar day that is two calendar days before check-in. On the following
+  day, cancellation is no longer allowed.
 - Optional services may be selected independently, including any combination
   of wellness treatments and premium cat food.
 - Empty or whitespace-only cat name or breed values are invalid.
@@ -158,7 +160,8 @@ available for a new booking.
 
 - **FR-001**: The system MUST let a customer select an arrival date and a later
   departure date without selecting a room or room type. The customer-facing date
-  controls MUST NOT allow dates before the current calendar date to be selected.
+  controls MUST NOT allow dates before the current calendar date in the facility's
+  configured IANA timezone (`HOTEL_TIMEZONE`) to be selected.
 - **FR-002**: The system MUST determine availability for the full stay using the
   room capacity and active reservations for each occupied night.
 - **FR-003**: The system MUST treat the arrival date as occupied and the
@@ -179,8 +182,9 @@ available for a new booking.
 - **FR-008**: The system MUST let a customer retrieve reservation details by
   providing its reservation code, without registration or login.
 - **FR-009**: The system MUST let a customer cancel an active reservation using
-  its reservation code through the end of the local calendar day two calendar
-  days before check-in, and show the cancellation result in the application.
+  its reservation code through the end of the calendar day in the facility's
+  configured timezone (`HOTEL_TIMEZONE`) that is two calendar days before
+  check-in, and show the cancellation result in the application.
   After that deadline, the system MUST refuse cancellation and keep the
   reservation active.
 - **FR-010**: The system MUST NOT allow reservation details to be modified after

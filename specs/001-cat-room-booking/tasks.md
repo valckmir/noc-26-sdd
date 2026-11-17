@@ -25,7 +25,7 @@
 - [ ] T006 Implement SQLModel SQLite engine, session creation, and table initialization helpers in `src/cathotel/database.py`.
 - [ ] T007 Define the `CapacityDate` SQLModel in `src/cathotel/models.py` with `date` as the unique primary/business key and `room_capacity` as a required non-negative integer.
 - [ ] T008 Define the `Reservation` SQLModel in `src/cathotel/models.py` with a unique randomly generated six-digit code displayed as two three-digit groups, arrival/departure dates, non-empty trimmed cat name and breed, required social and daily-walk booleans, four optional service booleans defaulting false, active/cancelled status defaulting active, and creation timestamp.
-- [ ] T009 Implement shared facility-local date and cancellation-cutoff helpers in `src/cathotel/services/dates.py`, using configured `HOTEL_TIMEZONE` and cutoff through the end of the local date two calendar days before check-in.
+- [ ] T009 Implement shared facility-local date and cancellation-cutoff helpers in `src/cathotel/services/dates.py`, using the configured facility IANA timezone `HOTEL_TIMEZONE` for booking-date validation and a cutoff through the end of the local calendar date two calendar days before check-in.
 
 **Checkpoint**: Shared settings, SQLite session, domain models, and date rules are available before story work.
 
@@ -78,7 +78,7 @@
 
 **Goal**: Customers use the reservation code alone to view their reservation or cancel it before the specified cutoff.
 
-**Independent Test**: Retrieve an active booking with its valid `NNN-NNN` code, cancel it on the final permitted local calendar date, and verify that an expired cancellation is refused and only a successful cancellation releases capacity.
+**Independent Test**: Retrieve an active booking with its valid `NNN-NNN` code, cancel it on the final permitted calendar date in `HOTEL_TIMEZONE`, and verify that an expired cancellation is refused and only a successful cancellation releases capacity.
 
 ### Tests for User Story 3
 
@@ -88,7 +88,7 @@
 ### Implementation for User Story 3
 
 - [ ] T023 [US3] Implement reservation lookup by exact randomly generated six-digit `NNN-NNN` code in `src/cathotel/services/reservations.py`; treat the code as the sole customer credential and do not limit failed attempts.
-- [ ] T024 [US3] Implement transactional cancellation in `src/cathotel/services/reservations.py`; allow cancellation through the end of facility-local check-in date minus two calendar days, refuse it afterward, and transition active to cancelled exactly once.
+- [ ] T024 [US3] Implement transactional cancellation in `src/cathotel/services/reservations.py`; allow cancellation through the end of the check-in date minus two calendar days in configured `HOTEL_TIMEZONE`, refuse it afterward, and transition active to cancelled exactly once.
 - [ ] T025 [US3] Add reservation lookup and cancellation screens/flows to `src/cathotel/web.py`; show details and status for a recognized code, require cancellation confirmation, show unknown-code and deadline errors, provide no reservation-edit controls, and send no external notifications.
 
 **Checkpoint**: Customers can self-manage reservation details/status and release capacity only when cancellation is permitted.

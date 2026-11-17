@@ -20,7 +20,7 @@ One cat's room stay, created as active immediately upon successful confirmation.
 |---|---|---|
 | id | integer | Internal generated identity |
 | code | string | Required; randomly generated; unique; six digits displayed as `NNN-NNN` |
-| arrival_date | date | Required; current or future date in facility timezone |
+| arrival_date | date | Required; current or future date in the facility's configured IANA timezone (`HOTEL_TIMEZONE`) |
 | departure_date | date | Required; strictly after arrival date |
 | cat_name | string | Required; non-empty after trimming whitespace |
 | breed | string | Required; non-empty after trimming whitespace |
@@ -50,6 +50,7 @@ do not consume capacity and remain available for lookup by code.
 - `Reservation.code` is a randomly generated, unique six-digit number rendered
   as three digits, hyphen, three digits (`NNN-NNN`). Retain leading zeros when
   storing and displaying the code; retry generation if a code collision occurs.
-- Cancellation changes `active` to `cancelled` only when the facility-local date
-  is no later than two calendar days before arrival. Repeated cancellation does
+- Booking-date validation and cancellation use the facility's configured IANA
+  timezone (`HOTEL_TIMEZONE`). Cancellation changes `active` to `cancelled` only
+  when the facility-local date is no later than two calendar days before arrival. Repeated cancellation does
   not release capacity twice.

@@ -43,7 +43,8 @@ inconsistent capacity.
 
 ## Decision: Interpret booking and cancellation dates in the facility timezone
 
-**Decision**: Require `HOTEL_TIMEZONE` as an IANA time-zone setting. Disallow
+**Decision**: Require `HOTEL_TIMEZONE` as the facility's IANA time-zone setting; all booking
+and cancellation calendar dates use it. Disallow
 past arrival dates in both the customer interface and service validation. A
 cancellation remains permitted through the end of the local calendar day two
 days before check-in.
