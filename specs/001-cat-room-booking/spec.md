@@ -31,9 +31,10 @@ available for each night.
 **Why this priority**: Staff-defined capacity is the foundation for reliable
 availability checks and must be established before customers can book.
 
-**Independent Test**: Upload a valid CSV, verify the listed dates' capacity is
-used in availability checks, then upload invalid data and verify it is rejected
-without applying a partial update.
+**Independent Test**: Run the staff CLI with a valid CSV and verify each listed
+date and room capacity is stored in SQLite. Then submit malformed, duplicate-date,
+or reservation-conflicting data and verify the import fails and the database
+remains unchanged.
 
 **Acceptance Scenarios**:
 

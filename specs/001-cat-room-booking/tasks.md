@@ -35,12 +35,12 @@
 
 **Goal**: Staff can import dated room capacities via the Typer CLI, with strict all-or-nothing validation and no customer-facing staff tools.
 
-**Independent Test**: Invoke the CLI with a valid CSV and verify listed capacities are stored; submit malformed, duplicate-date, or reservation-conflicting input and verify the command fails without changing any capacity.
+**Independent Test**: Invoke the CLI with a valid CSV and read back the `CapacityDate` rows from SQLite to verify each listed date and capacity; submit malformed, duplicate-date, or reservation-conflicting input and verify the command fails and the database remains unchanged.
 
 ### Tests for User Story 1
 
 - [ ] T010 [P] [US1] Add capacity-service tests for required CSV headers `date,room_capacity`, ISO `YYYY-MM-DD` dates, non-negative whole-number capacity, duplicate dates, omitted dates remaining unchanged, and all-or-nothing validation in `tests/unit/test_capacity_service.py`.
-- [ ] T011 [P] [US1] Add Typer CLI tests for successful import output, actionable validation errors, and non-zero failure exit status in `tests/integration/test_capacity_cli.py`.
+- [ ] T011 [P] [US1] Add Typer CLI integration tests that verify successful imports by querying persisted `CapacityDate` rows in the test SQLite database, and verify actionable errors, non-zero failure exit status, and unchanged database contents after invalid imports in `tests/integration/test_capacity_cli.py`.
 
 ### Implementation for User Story 1
 
