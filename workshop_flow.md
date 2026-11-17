@@ -57,3 +57,7 @@ The uv is used for dependency management.
 
 (no args)
 resolve identified issues one by one
+
+## Implement
+
+phase by phase
