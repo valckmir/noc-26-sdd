@@ -125,3 +125,47 @@ def create_reservation(
     except Exception:
         session.rollback()
         raise
+
+
+def get_reservation(session: Session, code: str) -> Reservation | None:
+    normalized = code.strip().replace("-", "")
+    if len(normalized) != 6 or not normalized.isdigit():
+        return None
+    return session.exec(
+        select(Reservation).where(Reservation.code == normalized)
+    ).first()
+
+
+def cancel_reservation(
+    session: Session,
+    code: str,
+    *,
+    hotel_timezone: str,
+    today: date | None = None,
+) -> Reservation:
+    normalized = code.strip().replace("-", "")
+    try:
+        session.connection().exec_driver_sql("BEGIN IMMEDIATE")
+        reservation = get_reservation(session, normalized)
+        if reservation is None:
+            raise ReservationError("reservation code was not found")
+        if reservation.status == ReservationStatus.CANCELLED:
+            session.commit()
+            session.refresh(reservation)
+            session.expunge(reservation)
+            return reservation
+
+        current_date = today or facility_today(hotel_timezone)
+        cancellation_deadline = reservation.arrival_date - timedelta(days=2)
+        if current_date > cancellation_deadline:
+            raise ReservationError("cancellation deadline has passed")
+
+        reservation.status = ReservationStatus.CANCELLED
+        session.add(reservation)
+        session.commit()
+        session.refresh(reservation)
+        session.expunge(reservation)
+        return reservation
+    except Exception:
+        session.rollback()
+        raise

@@ -82,14 +82,14 @@
 
 ### Tests for User Story 3
 
-- [ ] T021 [P] [US3] Add reservation-service tests for valid/unknown codes, active/cancelled states, end-of-local-day cutoff, late cancellation refusal, and one-time capacity release in `tests/unit/test_reservation_management.py`.
-- [ ] T022 [P] [US3] Add Streamlit AppTest coverage for code entry, detail display, cancellation confirmation, expired-cutoff messaging, and unknown-code behavior in `tests/acceptance/test_customer_reservation_management.py`.
+- [X] T021 [P] [US3] Add reservation-service tests for valid/unknown codes, active/cancelled states, end-of-local-day cutoff, late cancellation refusal, and one-time capacity release in `tests/unit/test_reservation_management.py`.
+- [X] T022 [P] [US3] Add Streamlit AppTest coverage for code entry, detail display, cancellation confirmation, expired-cutoff messaging, and unknown-code behavior in `tests/acceptance/test_customer_reservation_management.py`.
 
 ### Implementation for User Story 3
 
-- [ ] T023 [US3] Implement reservation lookup by exact randomly generated six-digit `NNN-NNN` code in `src/cathotel/services/reservations.py`; treat the code as the sole customer credential and do not limit failed attempts.
-- [ ] T024 [US3] Implement transactional cancellation in `src/cathotel/services/reservations.py`; allow cancellation through the end of the check-in date minus two calendar days in configured `HOTEL_TIMEZONE`, refuse it afterward, and transition active to cancelled exactly once.
-- [ ] T025 [US3] Add reservation lookup and cancellation screens/flows to `src/cathotel/web.py`; show details and status for a recognized code, require cancellation confirmation, show unknown-code and deadline errors, provide no reservation-edit controls, and send no external notifications.
+- [X] T023 [US3] Implement reservation lookup by exact randomly generated six-digit `NNN-NNN` code in `src/cathotel/services/reservations.py`; treat the code as the sole customer credential and do not limit failed attempts.
+- [X] T024 [US3] Implement transactional cancellation in `src/cathotel/services/reservations.py`; allow cancellation through the end of the check-in date minus two calendar days in configured `HOTEL_TIMEZONE`, refuse it afterward, and transition active to cancelled exactly once.
+- [X] T025 [US3] Add reservation lookup and cancellation screens/flows to `src/cathotel/web.py`; show details and status for a recognized code, require cancellation confirmation, show unknown-code and deadline errors, provide no reservation-edit controls, and send no external notifications.
 
 **Checkpoint**: Customers can self-manage reservation details/status and release capacity only when cancellation is permitted.
 
