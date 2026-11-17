@@ -29,9 +29,7 @@ imports, and Streamlit-facing integration tests for customer journeys
 
 **Project Type**: Single Python web application with a staff CLI
 
-**Performance Goals**: For the initial single-facility scope, customer actions
-and CSV imports of up to 10,000 rows complete within 2 seconds at p95, excluding
-initial application startup. This is a planning target, not a scale guarantee.
+**Performance Goals**: No explicit performance target is defined for this feature.
 
 **Constraints**: All reservation and capacity business rules MUST live in
 services, not Streamlit views or Typer command handlers. SQLite transactions
@@ -44,9 +42,9 @@ on collision. Configuration MUST be loaded
 through Pydantic Settings, with `.env` supported. Dependencies MUST be managed
 with uv.
 
-**Scale/Scope**: One facility, one room category, one cat per reservation, and
-initial CSV imports up to 10,000 capacity rows. No customer accounts, payments,
-notifications, reservation edits, or staff web interface.
+**Scale/Scope**: One facility, one room category, and one cat per reservation.
+No customer accounts, payments, notifications, reservation edits, or staff web
+interface.
 
 ## Constitution Check
 

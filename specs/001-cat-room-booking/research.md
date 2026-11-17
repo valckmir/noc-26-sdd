@@ -100,10 +100,8 @@ configuration framework were rejected as brittle or unnecessary.
 
 - The initial service is for one facility and a modest booking volume; no
   multi-site partitioning or external services are required.
-- Initial CSV imports are expected to contain no more than 10,000 rows. The
-  planning target is under 2 seconds p95 for ordinary customer operations and
-  imports at this size, excluding app startup; confirm under deployment
-  conditions.
+- No explicit performance or CSV volume target was specified; performance
+  targets are outside this initial feature plan.
 - The CLI runs in an environment with access to the same SQLite database file
   used by the customer application.
 - Staff CLI invocation permissions are provided by the operating environment;
