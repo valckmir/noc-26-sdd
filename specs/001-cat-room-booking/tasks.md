@@ -89,7 +89,7 @@
 
 - [ ] T023 [US3] Implement reservation lookup by exact randomly generated six-digit `NNN-NNN` code in `src/cathotel/services/reservations.py`; treat the code as the sole customer credential and do not limit failed attempts.
 - [ ] T024 [US3] Implement transactional cancellation in `src/cathotel/services/reservations.py`; allow cancellation through the end of facility-local check-in date minus two calendar days, refuse it afterward, and transition active to cancelled exactly once.
-- [ ] T025 [US3] Add reservation lookup and cancellation screens/flows to `src/cathotel/web.py`; show details and status for a recognized code, require cancellation confirmation, show unknown-code and deadline errors, and send no external notifications.
+- [ ] T025 [US3] Add reservation lookup and cancellation screens/flows to `src/cathotel/web.py`; show details and status for a recognized code, require cancellation confirmation, show unknown-code and deadline errors, provide no reservation-edit controls, and send no external notifications.
 
 **Checkpoint**: Customers can self-manage reservation details/status and release capacity only when cancellation is permitted.
 
