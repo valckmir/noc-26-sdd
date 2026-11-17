@@ -56,11 +56,11 @@
 
 **Goal**: Customers select an allowed date range, see availability, enter required cat details and optional services, and immediately receive a reservation code when confirmed.
 
-**Independent Test**: With capacity loaded, book an available stay and verify immediate confirmation with a unique `NNN-NNN` code; verify unavailable dates, invalid details, past dates, and competing last-room bookings cannot create an invalid or over-capacity reservation.
+**Independent Test**: With capacity loaded, book an available stay and verify immediate confirmation with a unique `NNN-NNN` code; verify unavailable dates (including dates with no capacity record), invalid details, past dates, and competing last-room bookings cannot create an invalid or over-capacity reservation.
 
 ### Tests for User Story 2
 
-- [ ] T015 [P] [US2] Add reservation-service tests for past/invalid date ranges, every-night availability, missing capacity, required cat fields, optional service combinations, and capacity exhaustion in `tests/unit/test_reservation_booking.py`.
+- [ ] T015 [P] [US2] Add reservation-service tests for past/invalid date ranges, every-night availability, dates without capacity being unavailable, required cat fields, optional service combinations, and capacity exhaustion in `tests/unit/test_reservation_booking.py`.
 - [ ] T016 [P] [US2] Add Streamlit AppTest coverage for past-date exclusion, unavailable range messaging, successful immediate confirmation, and random unique six-digit `NNN-NNN` code format in `tests/acceptance/test_customer_booking.py`.
 
 ### Implementation for User Story 2

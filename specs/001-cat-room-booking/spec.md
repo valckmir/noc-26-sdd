@@ -49,9 +49,6 @@ remains unchanged.
    **When** an update would make any date's capacity lower than its active
    reservations, **Then** that update is rejected and existing capacity remains
    unchanged.
-4. **Given** a customer checks dates for which no capacity has been provided,
-   **When** availability is evaluated, **Then** those dates are treated as
-   unavailable.
 
 ---
 
@@ -75,9 +72,10 @@ immediate confirmation with the submitted details.
    selects any optional services, and confirms the booking, **Then** the
    reservation is immediately confirmed and a unique reservation code in the
    format ###-### and reservation details are shown.
-2. **Given** the customer is checking a range that has no room available on at
-   least one night, **When** availability is checked, **Then** the customer is
-   told the range cannot be booked and is not prompted to submit a reservation.
+2. **Given** the customer is checking a range with no room available on at least
+   one night, including a night with no supplied capacity, **When** availability is
+   checked, **Then** the customer is told the range cannot be booked and is not
+   prompted to submit a reservation.
 3. **Given** the customer has not supplied all required cat details,
    **When** they attempt to confirm, **Then** the missing or invalid details are
    identified and no reservation is created.
