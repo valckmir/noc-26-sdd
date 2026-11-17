@@ -39,14 +39,14 @@
 
 ### Tests for User Story 1
 
-- [ ] T010 [P] [US1] Add capacity-service tests for required CSV headers `date,room_capacity`, ISO `YYYY-MM-DD` dates, non-negative whole-number capacity, duplicate dates, omitted dates remaining unchanged, and all-or-nothing validation in `tests/unit/test_capacity_service.py`.
-- [ ] T011 [P] [US1] Add Typer CLI integration tests that verify successful imports by querying persisted `CapacityDate` rows in the test SQLite database, and verify actionable errors, non-zero failure exit status, and unchanged database contents after invalid imports in `tests/integration/test_capacity_cli.py`.
+- [X] T010 [P] [US1] Add capacity-service tests for required CSV headers `date,room_capacity`, ISO `YYYY-MM-DD` dates, non-negative whole-number capacity, duplicate dates, omitted dates remaining unchanged, and all-or-nothing validation in `tests/unit/test_capacity_service.py`.
+- [X] T011 [P] [US1] Add Typer CLI integration tests that verify successful imports by querying persisted `CapacityDate` rows in the test SQLite database, and verify actionable errors, non-zero failure exit status, and unchanged database contents after invalid imports in `tests/integration/test_capacity_cli.py`.
 
 ### Implementation for User Story 1
 
-- [ ] T012 [US1] Implement CSV parsing and validation in `src/cathotel/services/capacity.py`; require exactly `date,room_capacity`, ISO `YYYY-MM-DD`, non-negative whole-number capacities, and no duplicate date per file; reject the complete file if any row is invalid.
-- [ ] T013 [US1] Implement transactional capacity upsert in `src/cathotel/services/capacity.py`; update only dates present in the import, leave omitted dates unchanged, and reject the entire update if any new capacity is below its active reservation count.
-- [ ] T014 [US1] Implement the Typer `capacity import PATH` command in `src/cathotel/cli.py` using shared settings, SQLite sessions, and capacity service; report successful row count or actionable errors, return non-zero on failure, and keep staff upload controls out of `src/cathotel/web.py`.
+- [X] T012 [US1] Implement CSV parsing and validation in `src/cathotel/services/capacity.py`; require exactly `date,room_capacity`, ISO `YYYY-MM-DD`, non-negative whole-number capacities, and no duplicate date per file; reject the complete file if any row is invalid.
+- [X] T013 [US1] Implement transactional capacity upsert in `src/cathotel/services/capacity.py`; update only dates present in the import, leave omitted dates unchanged, and reject the entire update if any new capacity is below its active reservation count.
+- [X] T014 [US1] Implement the Typer `capacity import PATH` command in `src/cathotel/cli.py` using shared settings, SQLite sessions, and capacity service; report successful row count or actionable errors, return non-zero on failure, and keep staff upload controls out of `src/cathotel/web.py`.
 
 **Checkpoint**: The staff CLI can define capacity and reject invalid updates atomically; customer UI remains separate.
 
