@@ -60,15 +60,15 @@
 
 ### Tests for User Story 2
 
-- [ ] T015 [P] [US2] Add reservation-service tests for past/invalid date ranges, every-night availability, dates without capacity being unavailable, required cat fields, optional service combinations, and capacity exhaustion in `tests/unit/test_reservation_booking.py`.
-- [ ] T016 [P] [US2] Add Streamlit AppTest coverage for past-date exclusion, unavailable range messaging, successful immediate confirmation, and random unique six-digit `NNN-NNN` code format in `tests/acceptance/test_customer_booking.py`.
+- [X] T015 [P] [US2] Add reservation-service tests for past/invalid date ranges, every-night availability, dates without capacity being unavailable, required cat fields, optional service combinations, and capacity exhaustion in `tests/unit/test_reservation_booking.py`.
+- [X] T016 [P] [US2] Add Streamlit AppTest coverage for past-date exclusion, unavailable range messaging, successful immediate confirmation, and random unique six-digit `NNN-NNN` code format in `tests/acceptance/test_customer_booking.py`.
 
 ### Implementation for User Story 2
 
-- [ ] T017 [US2] Implement reservation-code generation and uniqueness retry in `src/cathotel/services/reservations.py`; generate a random six-digit number, preserve leading zeros, display as `NNN-NNN`, and enforce uniqueness in SQLite by retrying collisions.
-- [ ] T018 [US2] Implement service-level date/detail validation and availability checks in `src/cathotel/services/reservations.py`; reject past arrival dates, require departure after arrival, count occupied nights as arrival-inclusive/departure-exclusive, require capacity on every occupied night, and treat dates without capacity as unavailable.
-- [ ] T019 [US2] Implement transactional reservation confirmation in `src/cathotel/services/reservations.py`; recheck every occupied night's capacity and persist the active reservation atomically so concurrent confirmations cannot exceed capacity.
-- [ ] T020 [US2] Implement the Streamlit customer booking flow in `src/cathotel/web.py`; prevent selecting dates before facility-local today, omit room listing/type selection and staff controls, collect required cat fields and optional bath/massage/claw-trimming/premium-food choices, call services, and display availability, validation, conflict, or confirmation results.
+- [X] T017 [US2] Implement reservation-code generation and uniqueness retry in `src/cathotel/services/reservations.py`; generate a random six-digit number, preserve leading zeros, display as `NNN-NNN`, and enforce uniqueness in SQLite by retrying collisions.
+- [X] T018 [US2] Implement service-level date/detail validation and availability checks in `src/cathotel/services/reservations.py`; reject past arrival dates, require departure after arrival, count occupied nights as arrival-inclusive/departure-exclusive, require capacity on every occupied night, and treat dates without capacity as unavailable.
+- [X] T019 [US2] Implement transactional reservation confirmation in `src/cathotel/services/reservations.py`; recheck every occupied night's capacity and persist the active reservation atomically so concurrent confirmations cannot exceed capacity.
+- [X] T020 [US2] Implement the Streamlit customer booking flow in `src/cathotel/web.py`; prevent selecting dates before facility-local today, omit room listing/type selection and staff controls, collect required cat fields and optional bath/massage/claw-trimming/premium-food choices, call services, and display availability, validation, conflict, or confirmation results.
 
 **Checkpoint**: Customers can complete or safely fail the booking journey without login; successful bookings immediately consume capacity.
 
