@@ -11,7 +11,7 @@
 **Purpose**: Establish the Python package dependencies and runnable entry points.
 
 - [ ] T001 Add Streamlit, Typer, SQLModel, and Pydantic Settings dependencies in `pyproject.toml`, preserving the existing Python 3.13 and uv configuration.
-- [ ] T002 [P] Create service package initializer in `src/cathotel/services/__init__.py`.
+- [ ] T002 [P] Create the services package initializer in `src/cathotel/services/__init__.py` and use `src/cathotel/cli.py` as the single Typer CLI module.
 - [ ] T003 Add or update the `cathotel` console entry point for the Typer CLI in `pyproject.toml`.
 
 ---
