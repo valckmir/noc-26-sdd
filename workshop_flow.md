@@ -48,3 +48,7 @@ Implement the app with the streamlit framework. Web interface is for customers, 
 Data is stored in SQLite DB, SQLModel is used as ORM and for business models. Pydantic settings with .env file is used for configuration.
 
 The uv is used for dependency management.
+
+## Tasks
+
+(no args)
