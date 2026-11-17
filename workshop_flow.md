@@ -52,3 +52,7 @@ The uv is used for dependency management.
 ## Tasks
 
 (no args)
+
+## Analyze
+
+(no args)
