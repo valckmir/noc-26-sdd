@@ -203,18 +203,12 @@ available for a new booking.
 
 ### Measurable Outcomes
 
-- **SC-001**: At least 90% of first-time customers in usability testing can
-  complete an available booking, including cat details and service choices,
-  within 3 minutes without assistance.
-- **SC-002**: In acceptance testing, every successfully confirmed reservation
+- **SC-001**: In acceptance testing, every successfully confirmed reservation
   has a unique code, and no tested date exceeds its supplied room capacity.
-- **SC-003**: In usability testing, at least 95% of customers with a valid code
-  can retrieve the correct reservation or complete its cancellation on their
-  first attempt without assistance.
-- **SC-004**: All tested malformed, duplicate-date, or capacity-conflicting CSV
+- **SC-002**: All tested malformed, duplicate-date, or capacity-conflicting CSV
   uploads are rejected without applying any part of the upload, and the staff
   member can identify the cause from the displayed result.
-- **SC-005**: Customers receive booking, lookup, and cancellation outcomes in
+- **SC-003**: Customers receive booking, lookup, and cancellation outcomes in
   the application with no external notification sent.
 
 ## Assumptions
