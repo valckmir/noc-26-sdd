@@ -32,7 +32,6 @@
 ## Notes
 
 - Reviewed all checklist items against the specification. Staff capacity definition is prioritized first, followed by customer booking
-  and reservation-code management. Validation behavior and scope boundaries are
-  covered. The customer-facing application and staff access path are distinguished;
-  details of staff access are outside this feature scope. All checklist items
-  pass.
+  and reservation-code management. Past-date selection is prohibited in the
+  customer date controls. Validation behavior and scope boundaries are covered;
+  details of staff access are outside this feature scope. All checklist items pass.

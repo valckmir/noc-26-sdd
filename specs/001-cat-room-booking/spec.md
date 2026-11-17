@@ -14,6 +14,7 @@
 
 - Q: What accountless access should protect staff capacity uploads from customers and other unauthorized visitors? → A: The web application is for customers only; staff uses a different type of access to the system.
 - Q: Should the system limit repeated failed attempts to use reservation codes? → A: No; a unique reservation code alone is sufficient, with no limit on failed attempts.
+- Q: Should the booking interface permit selecting past dates? → A: No; the UI must not allow selection of past dates.
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -77,6 +78,8 @@ immediate confirmation with the submitted details.
 4. **Given** another customer books the last available room while this customer
    is completing the form, **When** this customer confirms, **Then** the system
    does not exceed capacity and explains that the range is no longer available.
+5. **Given** a customer is choosing stay dates, **When** they view past dates in
+   the date-selection controls, **Then** those dates cannot be selected.
 
 ---
 
@@ -116,7 +119,7 @@ available for a new booking.
 ### Edge Cases
 
 - A requested range must have a departure date after its arrival date; same-day
-  and reversed ranges cannot be booked.
+  and reversed ranges cannot be booked. Past dates cannot be selected for a stay.
 - A range is available only when every night in it has capacity remaining.
 - The arrival date is included and the departure date is excluded from occupied
   nights, following the common overnight-stay convention.
@@ -140,7 +143,8 @@ available for a new booking.
 ### Functional Requirements
 
 - **FR-001**: The system MUST let a customer select an arrival date and a later
-  departure date without selecting a room or room type.
+  departure date without selecting a room or room type. The customer-facing date
+  controls MUST NOT allow dates before the current calendar date to be selected.
 - **FR-002**: The system MUST determine availability for the full stay using the
   room capacity and active reservations for each occupied night.
 - **FR-003**: The system MUST treat the arrival date as occupied and the
