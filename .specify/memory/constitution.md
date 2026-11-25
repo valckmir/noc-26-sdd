@@ -1,50 +1,74 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+Sync Impact Report
+Version change: unratified scaffold → 1.0.0
+Modified principles: none; initial principles established
+Added sections: Product and Architecture; Development Workflow
+Removed sections: none
+Follow-up TODOs: Confirm original ratification date.
+-->
+# CatHotel Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Customer-Centered Simplicity
+CatHotel MUST provide a simple, minimal experience centered on the needs of cat
+owners and staff. Every feature MUST deliver clear, practical value to at least
+one of these roles. Features without a demonstrated user benefit MUST NOT be
+added. This keeps the product focused and easy to use.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. Layered Business Logic
+Business rules MUST live in services, never in views. Views MUST limit their
+responsibility to presenting information and collecting user input, delegating
+decisions and operations to services. This separation keeps behavior consistent
+and straightforward to maintain.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. Simplicity Over Complexity
+Implementations MUST use the simplest design that meets the validated
+requirements. The project MUST accept reasonable limitations rather than add
+general-purpose abstractions, speculative capabilities, or unnecessary layers.
+Complexity MUST be justified by a concrete user or operational need.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. Role-Aware Experiences
+The application MUST support two roles: customer (cat owner) and staff.
+Features MUST make role-specific actions and information clear, and MUST prevent
+users from performing actions outside their role. This supports a focused
+experience while protecting booking and operational workflows.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. Intentional Code Comments
+Code comments MUST explain why a non-obvious decision or constraint exists.
+Comments MUST NOT restate what code does or how it works; implementation details
+belong in the code itself. This keeps comments useful as durable context.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## Product and Architecture
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+CatHotel is a web application for booking rooms for cats. Product and
+architecture decisions MUST preserve a minimal, user-centered booking experience
+for customers and a practical workflow for staff. Business logic MUST remain in
+the service layer as defined by Principle II.
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+## Development Workflow
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+Changes MUST be reviewed against the Core Principles and the product and
+architecture constraints before acceptance. Reviews MUST verify that business
+rules remain in services, role boundaries are enforced, and complexity is
+proportionate to demonstrated value. Identified violations MUST be corrected or
+explicitly resolved through a constitution amendment before acceptance.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+This constitution is the authoritative source for product and engineering
+principles. Amendments MUST be proposed with their rationale, reviewed and
+approved by the project maintainers, and recorded in this document. An amendment
+MUST update the version and last-amended date and include a Sync Impact Report
+for human review; the report MUST be removed before the amendment is committed.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+Versioning follows semantic versioning: MAJOR for incompatible governance
+changes, MINOR for new principles or materially expanded guidance, and PATCH for
+clarifications and non-semantic wording changes. The ratification date records
+original adoption and MUST remain unchanged by amendments. Until that date is
+confirmed, it is recorded as a TODO.
+
+Every change review MUST check compliance with this constitution. Proposals that
+conflict with it MUST either be revised or accompanied by an approved amendment.
+
+**Version**: 1.0.0 | **Ratified**: 2026-11-17 | **Last Amended**: 2026-11-17
