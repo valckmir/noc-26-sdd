@@ -6,7 +6,13 @@ from sqlmodel import Session
 from cathotel.config import get_settings
 from cathotel.database import create_database_engine, create_db_and_tables
 from cathotel.services.dates import facility_today
-from cathotel.models import ReservationStatus
+from cathotel.models import REVIEW_MAX_LENGTH, Reservation, ReservationStatus
+from cathotel.services.feedback import (
+    FeedbackError,
+    can_leave_feedback,
+    get_feedback,
+    submit_feedback,
+)
 from cathotel.services.reservations import (
     ReservationError,
     check_availability,
@@ -197,6 +203,11 @@ def manage_reservation() -> None:
             st.info("This reservation is cancelled.")
         return
 
+    if can_leave_feedback(reservation, facility_today(settings.hotel_timezone)):
+        show_feedback(engine, settings, reservation)
+        return
+    st.info(f"Feedback opens on your departure date ({reservation.departure_date}).")
+
     if not st.session_state.get("confirm_cancellation"):
         if st.button("Cancel reservation", type="secondary"):
             st.session_state["confirm_cancellation"] = True
@@ -223,6 +234,43 @@ def manage_reservation() -> None:
     if keep_col.button("Keep reservation"):
         st.session_state["confirm_cancellation"] = False
         st.rerun()
+
+
+
+def show_feedback(engine, settings, reservation: Reservation) -> None:
+    with Session(engine) as session:
+        feedback = get_feedback(session, reservation)
+    if feedback is None:
+        st.subheader("How was your cat's stay?")
+        with st.form("feedback_form"):
+            rating = st.radio(
+                "Rating (1 = poor, 5 = excellent)",
+                [1, 2, 3, 4, 5],
+                index=None,
+                horizontal=True,
+            )
+            review = st.text_area("Short review (optional)", max_chars=REVIEW_MAX_LENGTH)
+            send = st.form_submit_button("Send feedback")
+        if not send:
+            return
+        try:
+            with Session(engine) as session:
+                submit_feedback(
+                    session,
+                    reservation.code,
+                    rating,
+                    review,
+                    hotel_timezone=settings.hotel_timezone,
+                )
+        except FeedbackError as error:
+            st.error(str(error))
+            return
+        st.rerun()
+
+    st.success("Thank you for your feedback!")
+    st.write(f"Your rating: {feedback.rating}/5")
+    if feedback.review:
+        st.write(feedback.review)
 
 
 if __name__ == "__main__":

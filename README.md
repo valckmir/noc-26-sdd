@@ -37,6 +37,20 @@ The customer UI supports date-based availability checks, immediate bookings,
 and reservation-code lookup/cancellation. It does not expose staff capacity
 management or require customer accounts.
 
+Once a stay has ended (on or after the departure date), looking up its
+reservation code shows a feedback form: a required 1–5 rating and an optional
+review of up to 500 characters. Each reservation can be reviewed once;
+cancelled reservations cannot be reviewed.
+
+## Read customer feedback as staff
+
+```sh
+uv run cathotel feedback list
+```
+
+Lists all feedback newest first, followed by the entry count and average
+rating. Feedback is never shown in the customer web application.
+
 ## Import capacity as staff
 
 Prepare a UTF-8 CSV with exactly `date,room_capacity` columns, ISO `YYYY-MM-DD`
