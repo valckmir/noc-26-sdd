@@ -43,3 +43,20 @@ class Reservation(SQLModel, table=True):
     @property
     def display_code(self) -> str:
         return f"{self.code[:3]}-{self.code[3:]}"
+
+
+REVIEW_MAX_LENGTH = 500
+
+
+class Feedback(SQLModel, table=True):
+    __tablename__ = "feedback"
+    __table_args__ = (
+        CheckConstraint("rating BETWEEN 1 AND 5"),
+        CheckConstraint(f"review IS NULL OR length(review) <= {REVIEW_MAX_LENGTH}"),
+    )
+
+    id: int | None = Field(default=None, primary_key=True)
+    reservation_id: int = Field(foreign_key="reservation.id", unique=True)
+    rating: int = Field(ge=1, le=5)
+    review: str | None = Field(default=None, max_length=REVIEW_MAX_LENGTH)
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
